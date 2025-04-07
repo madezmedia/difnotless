@@ -1,0 +1,67 @@
+# Shopify MCP Configuration
+
+version: 0
+name: shopify
+description: Shopify Storefront API access for DifNotLess e-commerce platform
+type: auth_api
+
+# Authentication & base URL configuration
+auth:
+  type: storefront_token
+  token_env: SHOPIFY_STOREFRONT_ACCESS_TOKEN
+  domain_env: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
+  version: "2024-01"  # API version
+
+endpoints:
+  - name: products
+    description: "Fetch product data from Shopify Storefront API"
+    path: "/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query GetProducts($first: Int!) { products(first: $first) { edges { node { id title handle description images(first: 1) { edges { node { url } } } priceRange { minVariantPrice { amount currencyCode } } } } } }",
+        "variables": {
+          "first": 20
+        }
+      }
+  
+  - name: product
+    description: "Fetch details for a specific product by handle"
+    path: "/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query GetProduct($handle: String!) { product(handle: $handle) { id title handle description images(first: 5) { edges { node { url } } } priceRange { minVariantPrice { amount currencyCode } } variants(first: 20) { edges { node { id title price { amount currencyCode } availableForSale } } } } }",
+        "variables": {
+          "handle": "{{handle}}"
+        }
+      }
+    
+  - name: collections
+    description: "Fetch collection data from Shopify Storefront API"
+    path: "/api/{{version}}/graphql.json" 
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query GetCollections($first: Int!) { collections(first: $first) { edges { node { id title handle description image { url } } } } }",
+        "variables": {
+          "first": 20
+        }
+      }
+      
+  - name: collection
+    description: "Fetch products in a specific collection by handle"
+    path: "/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query GetCollection($handle: String!, $first: Int!) { collection(handle: $handle) { id title description products(first: $first) { edges { node { id title handle description images(first: 1) { edges { node { url } } } priceRange { minVariantPrice { amount currencyCode } } } } } } }",
+        "variables": {
+          "handle": "{{handle}}",
+          "first": 20
+        }
+      }

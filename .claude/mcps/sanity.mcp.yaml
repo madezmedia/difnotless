@@ -1,0 +1,45 @@
+# Sanity CMS MCP Configuration
+
+version: 0
+name: sanity
+description: Sanity CMS API access for DifNotLess content management
+type: auth_api
+
+# Authentication & base URL configuration
+auth:
+  type: project_token
+  token_env: SANITY_API_TOKEN
+  project_id_env: NEXT_PUBLIC_SANITY_PROJECT_ID
+  dataset_env: NEXT_PUBLIC_SANITY_DATASET
+  version: "v2021-10-21"
+
+endpoints:
+  - name: blog_posts
+    description: "Fetch blog posts from Sanity CMS"
+    path: "/{{project_id}}/{{dataset}}/{{version}}/data/query/production"
+    method: GET
+    query_params:
+      query: "*[_type == 'post'] | order(publishedAt desc) {title, slug, excerpt, publishedAt, 'categories': categories[]->title, 'author': author->name}"
+  
+  - name: blog_post
+    description: "Fetch a specific blog post by slug"
+    path: "/{{project_id}}/{{dataset}}/{{version}}/data/query/production"
+    method: GET
+    query_params:
+      query: "*[_type == 'post' && slug.current == $slug][0] {title, slug, content, excerpt, publishedAt, 'categories': categories[]->title, 'author': author->{name, bio, image}}"
+      $slug: "{{slug}}"
+    
+  - name: resources
+    description: "Fetch educational resources from Sanity CMS"
+    path: "/{{project_id}}/{{dataset}}/{{version}}/data/query/production"
+    method: GET
+    query_params:
+      query: "*[_type == 'educationalResource'] | order(publishedAt desc) {title, slug, description, publishedAt, 'categories': categories[]->title}"
+      
+  - name: resource
+    description: "Fetch a specific educational resource by slug"
+    path: "/{{project_id}}/{{dataset}}/{{version}}/data/query/production"
+    method: GET
+    query_params:
+      query: "*[_type == 'educationalResource' && slug.current == $slug][0] {title, slug, content, description, publishedAt, 'categories': categories[]->title}"
+      $slug: "{{slug}}"
