@@ -1,0 +1,126 @@
+# Shopify Admin API MCP Configuration
+
+version: 0
+name: shopify-admin
+description: Shopify Admin API access for DifNotLess e-commerce platform
+type: auth_api
+
+# Authentication & base URL configuration
+auth:
+  type: admin_token
+  token_env: SHOPIFY_ADMIN_ACCESS_TOKEN
+  domain_env: NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN
+  version: "2024-01"  # API version
+
+endpoints:
+  - name: create_collection
+    description: "Create a new collection in Shopify"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "mutation collectionCreate($input: CollectionInput!) { collectionCreate(input: $input) { collection { id title handle descriptionHtml image { id src } } userErrors { field message } } }",
+        "variables": {
+          "input": {
+            "title": "{{title}}",
+            "descriptionHtml": "{{description}}",
+            "published": true,
+            "ruleSet": {
+              "rules": [
+                {
+                  "column": "PRODUCT_TYPE",
+                  "relation": "EQUALS",
+                  "condition": "{{product_type}}"
+                }
+              ]
+            }
+          }
+        }
+      }
+  
+  - name: update_collection
+    description: "Update an existing collection in Shopify"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "mutation collectionUpdate($input: CollectionInput!) { collectionUpdate(input: $input) { collection { id title handle descriptionHtml image { id src } } userErrors { field message } } }",
+        "variables": {
+          "input": {
+            "id": "{{collection_id}}",
+            "title": "{{title}}",
+            "descriptionHtml": "{{description}}"
+          }
+        }
+      }
+      
+  - name: delete_collection
+    description: "Delete a collection from Shopify"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "mutation collectionDelete($input: CollectionDeleteInput!) { collectionDelete(input: $input) { deletedCollectionId userErrors { field message } } }",
+        "variables": {
+          "input": {
+            "id": "{{collection_id}}"
+          }
+        }
+      }
+      
+  - name: add_products_to_collection
+    description: "Add products to a collection"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "mutation collectionAddProducts($id: ID!, $productIds: [ID!]!) { collectionAddProducts(id: $id, productIds: $productIds) { collection { id title } userErrors { field message } } }",
+        "variables": {
+          "id": "{{collection_id}}",
+          "productIds": {{product_ids}}
+        }
+      }
+      
+  - name: remove_products_from_collection
+    description: "Remove products from a collection"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "mutation collectionRemoveProducts($id: ID!, $productIds: [ID!]!) { collectionRemoveProducts(id: $id, productIds: $productIds) { collection { id title } userErrors { field message } } }",
+        "variables": {
+          "id": "{{collection_id}}",
+          "productIds": {{product_ids}}
+        }
+      }
+      
+  - name: list_collections
+    description: "List all collections in the Shopify store"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query getCollections($first: Int!) { collections(first: $first) { edges { node { id title handle descriptionHtml updatedAt publishedAt } } pageInfo { hasNextPage endCursor } } }",
+        "variables": {
+          "first": 50
+        }
+      }
+      
+  - name: get_collection
+    description: "Get detailed information about a specific collection"
+    path: "/admin/api/{{version}}/graphql.json"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "query": "query getCollection($id: ID!) { collection(id: $id) { id title handle descriptionHtml image { id src } updatedAt publishedAt products(first: 10) { edges { node { id title handle } } } } }",
+        "variables": {
+          "id": "{{collection_id}}"
+        }
+      }
