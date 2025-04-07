@@ -1,0 +1,118 @@
+# Printify MCP Configuration
+
+version: 0
+name: printify
+description: Printify API access for DifNotLess print-on-demand product management
+type: auth_api
+
+# Authentication & base URL configuration
+auth:
+  type: bearer_token
+  token_env: PRINTIFY_API_TOKEN
+  base_url: https://api.printify.com/v1
+
+endpoints:
+  - name: list_shops
+    description: "List all shops connected to your Printify account"
+    path: "/shops"
+    method: GET
+    content_type: application/json
+    
+  - name: get_shop
+    description: "Get details for a specific shop by ID"
+    path: "/shops/{{shop_id}}"
+    method: GET
+    content_type: application/json
+    
+  - name: list_products
+    description: "List all products in a shop"
+    path: "/shops/{{shop_id}}/products"
+    method: GET
+    query_params:
+      page: "{{page}}"
+      limit: "{{limit}}"
+    
+  - name: get_product
+    description: "Get details for a specific product"
+    path: "/shops/{{shop_id}}/products/{{product_id}}"
+    method: GET
+    content_type: application/json
+    
+  - name: create_product
+    description: "Create a new product in a shop"
+    path: "/shops/{{shop_id}}/products"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "title": "{{title}}",
+        "description": "{{description}}",
+        "blueprint_id": {{blueprint_id}},
+        "print_provider_id": {{print_provider_id}},
+        "variants": {{variants}},
+        "print_areas": {{print_areas}}
+      }
+      
+  - name: update_product
+    description: "Update an existing product"
+    path: "/shops/{{shop_id}}/products/{{product_id}}"
+    method: PUT
+    content_type: application/json
+    body: |
+      {
+        "title": "{{title}}",
+        "description": "{{description}}",
+        "variants": {{variants}},
+        "print_areas": {{print_areas}}
+      }
+      
+  - name: publish_product
+    description: "Publish a product to the connected sales channel"
+    path: "/shops/{{shop_id}}/products/{{product_id}}/publish"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "external": {
+          "id": "{{external_id}}",
+          "handle": "{{handle}}"
+        }
+      }
+      
+  - name: unpublish_product
+    description: "Unpublish a product from the sales channel"
+    path: "/shops/{{shop_id}}/products/{{product_id}}/unpublish"
+    method: POST
+    content_type: application/json
+    
+  - name: delete_product
+    description: "Delete a product"
+    path: "/shops/{{shop_id}}/products/{{product_id}}"
+    method: DELETE
+    content_type: application/json
+    
+  - name: list_blueprints
+    description: "List all available product blueprints (product types)"
+    path: "/catalog/blueprints"
+    method: GET
+    query_params:
+      page: "{{page}}"
+      limit: "{{limit}}"
+    
+  - name: get_blueprint
+    description: "Get details for a specific product blueprint"
+    path: "/catalog/blueprints/{{blueprint_id}}"
+    method: GET
+    content_type: application/json
+    
+  - name: list_print_providers
+    description: "List print providers for a specific blueprint"
+    path: "/catalog/blueprints/{{blueprint_id}}/print_providers"
+    method: GET
+    content_type: application/json
+    
+  - name: get_print_provider
+    description: "Get details for a specific print provider"
+    path: "/catalog/print_providers/{{provider_id}}"
+    method: GET
+    content_type: application/json

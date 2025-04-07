@@ -1,0 +1,80 @@
+# Airtable MCP Configuration
+
+version: 0
+name: airtable
+description: Airtable API access for DifNotLess product and inventory management
+type: auth_api
+
+# Authentication & base URL configuration
+auth:
+  type: bearer_token
+  token_env: AIRTABLE_API_KEY
+  base_url: https://api.airtable.com/v0
+
+endpoints:
+  - name: list_bases
+    description: "Get a list of all accessible Airtable bases"
+    path: "/meta/bases"
+    method: GET
+    content_type: application/json
+    
+  - name: get_base_tables
+    description: "Get tables in a specific base"
+    path: "/meta/bases/{{base_id}}/tables"
+    method: GET
+    content_type: application/json
+    
+  - name: list_products
+    description: "List products from the T-Shirt Designs table"
+    path: "/appQE2zrDMGjvn9Kt/T-Shirt%20Designs"
+    method: GET
+    query_params:
+      maxRecords: "{{max_records}}"
+      view: "{{view}}"
+      
+  - name: get_product
+    description: "Get details for a specific product by ID"
+    path: "/appQE2zrDMGjvn9Kt/T-Shirt%20Designs/{{record_id}}"
+    method: GET
+    content_type: application/json
+    
+  - name: create_product
+    description: "Create a new product in the T-Shirt Designs table"
+    path: "/appQE2zrDMGjvn9Kt/T-Shirt%20Designs"
+    method: POST
+    content_type: application/json
+    body: |
+      {
+        "records": [
+          {
+            "fields": {
+              "Design Name": "{{design_name}}",
+              "Style": "{{style}}",
+              "Medium": "{{medium}}",
+              "Description": "{{description}}",
+              "Tags": {{tags}}
+            }
+          }
+        ]
+      }
+      
+  - name: update_product
+    description: "Update an existing product in the T-Shirt Designs table"
+    path: "/appQE2zrDMGjvn9Kt/T-Shirt%20Designs"
+    method: PATCH
+    content_type: application/json
+    body: |
+      {
+        "records": [
+          {
+            "id": "{{record_id}}",
+            "fields": {{fields}}
+          }
+        ]
+      }
+      
+  - name: delete_product
+    description: "Delete a product from the T-Shirt Designs table"
+    path: "/appQE2zrDMGjvn9Kt/T-Shirt%20Designs/{{record_id}}"
+    method: DELETE
+    content_type: application/json
