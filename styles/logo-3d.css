@@ -1,0 +1,93 @@
+/* Enhanced 3D text effects for the logo */
+.logo-text-3d-enhanced {
+  position: relative;
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+  background-image: linear-gradient(to right, hsl(var(--gold)), hsl(var(--purple)), hsl(var(--teal)));
+
+  /* Reduced shadow intensity for 3D appearance */
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.04), 2px 2px 0px rgba(0, 0, 0, 0.04), 3px 3px 0px rgba(0, 0, 0, 0.04), 4px
+    4px 0px rgba(0, 0, 0, 0.04);
+
+  transform-style: preserve-3d;
+  transform: perspective(500px) rotateX(5deg);
+  transition: all 0.3s ease;
+}
+
+/* Light outline to enhance the 3D effect */
+.logo-text-3d-enhanced::before {
+  content: "Different Not Less";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(0, 0, 0, 0.1);
+}
+
+/* Hover effect */
+.logo-text-3d-enhanced:hover {
+  transform: perspective(500px) rotateX(10deg) translateY(-5px);
+  text-shadow:
+    1px 1px 0px rgba(0, 0, 0, 0.04),
+    2px 2px 0px rgba(0, 0, 0, 0.04),
+    3px 3px 0px rgba(0, 0, 0, 0.04),
+    4px 4px 0px rgba(0, 0, 0, 0.04),
+    5px 5px 0px rgba(0, 0, 0, 0.04);
+}
+
+/* Dark mode adjustments */
+.dark .logo-text-3d-enhanced {
+  text-shadow:
+    1px 1px 0px rgba(255, 255, 255, 0.04),
+    2px 2px 0px rgba(255, 255, 255, 0.04),
+    3px 3px 0px rgba(255, 255, 255, 0.04),
+    4px 4px 0px rgba(255, 255, 255, 0.04);
+}
+
+.dark .logo-text-3d-enhanced::before {
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.1);
+}
+
+.dark .logo-text-3d-enhanced:hover {
+  text-shadow:
+    1px 1px 0px rgba(255, 255, 255, 0.04),
+    2px 2px 0px rgba(255, 255, 255, 0.04),
+    3px 3px 0px rgba(255, 255, 255, 0.04),
+    4px 4px 0px rgba(255, 255, 255, 0.04),
+    5px 5px 0px rgba(255, 255, 255, 0.04);
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .logo-text-3d-enhanced,
+  .logo-text-3d-enhanced:hover {
+    transform: none;
+    transition: none;
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.07);
+  }
+
+  .dark .logo-text-3d-enhanced,
+  .dark .logo-text-3d-enhanced:hover {
+    text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.07);
+  }
+}
+
+/* Add new gradient shift effect */
+.logo-text-gradient {
+  position: relative;
+  background-image: linear-gradient(to right, hsl(var(--gold)), hsl(var(--teal)), hsl(var(--purple)), hsl(var(--gold)));
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: gradient-shift 8s ease infinite;
+  /* Subtle shadow for readability */
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+.dark .logo-text-gradient {
+  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
+}
+

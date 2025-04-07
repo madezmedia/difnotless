@@ -1,0 +1,62 @@
+/* Dark mode specific styles */
+.dark {
+  color-scheme: dark;
+}
+
+/* Dark mode gradient adjustments */
+.dark .gradient-text {
+  @apply bg-gradient-to-r from-gold via-teal to-purple bg-clip-text text-transparent;
+}
+
+.dark .gradient-text-animated {
+  @apply bg-gradient-to-r from-gold via-purple to-teal bg-clip-text text-transparent;
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Dark mode background gradients */
+.dark .bg-gradient-soft {
+  background: linear-gradient(135deg, hsl(220, 20%, 12%), hsl(220, 20%, 16%), hsl(220, 20%, 20%));
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.dark .bg-gradient-soft-reverse {
+  background: linear-gradient(135deg, hsl(220, 20%, 20%), hsl(220, 20%, 16%), hsl(220, 20%, 12%));
+  background-size: 200% 200%;
+  animation: gradient-shift 15s ease infinite;
+}
+
+.dark .bg-gradient-soft-vertical {
+  background: linear-gradient(to bottom, hsl(220, 20%, 12%), hsl(220, 20%, 16%));
+}
+
+.dark .bg-gradient-soft-vertical-reverse {
+  background: linear-gradient(to bottom, hsl(220, 20%, 16%), hsl(220, 20%, 12%));
+}
+
+/* Dark mode card and container styles */
+.dark .card,
+.dark .container-bg {
+  background-color: hsl(220, 20%, 14%);
+  border-color: hsl(220, 20%, 22%);
+}
+
+/* Dark mode glow effects */
+.dark .text-glow {
+  text-shadow: 0 0 10px rgba(244, 208, 63, 0.3), 0 0 20px rgba(44, 206, 192, 0.2);
+}
+
+/* Dark mode section transitions */
+.dark .section-transition::after {
+  background: linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.3));
+}
+
+/* Dark mode glass effect */
+.dark .glass-effect {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+

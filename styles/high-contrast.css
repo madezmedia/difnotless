@@ -1,0 +1,55 @@
+/* This file is dynamically loaded when high contrast mode is enabled */
+.high-contrast {
+  --gold: 47.1 89% 45% !important;
+  --teal: 174.5 65.4% 35% !important;
+  --purple: 282.1 59.8% 35% !important;
+  --coral: 16.2 100% 50% !important;
+
+  /* Increase text contrast */
+  --foreground: 0 0% 0% !important;
+  --background: 0 0% 100% !important;
+
+  /* Stronger focus indicators */
+  --ring: 0 0% 0% !important;
+
+  /* Solid borders for better definition */
+  --border: 0 0% 0% !important;
+}
+
+.high-contrast .gradient-text,
+.high-contrast [class*="bg-gradient"] {
+  /* Replace gradients with solid colors for better contrast */
+  background: hsl(var(--teal)) !important;
+  color: white !important;
+  background-image: none !important;
+  -webkit-text-fill-color: white !important;
+}
+
+.high-contrast a:focus,
+.high-contrast button:focus,
+.high-contrast input:focus,
+.high-contrast select:focus,
+.high-contrast textarea:focus {
+  outline: 3px solid black !important;
+  outline-offset: 2px !important;
+}
+
+.high-contrast.dark {
+  --foreground: 0 0% 100% !important;
+  --background: 0 0% 0% !important;
+
+  /* Adjust colors for dark high contrast */
+  --gold: 47.1 89% 65% !important;
+  --teal: 174.5 65.4% 65% !important;
+  --purple: 282.1 59.8% 65% !important;
+  --coral: 16.2 100% 70% !important;
+}
+
+.high-contrast.dark a:focus,
+.high-contrast.dark button:focus,
+.high-contrast.dark input:focus,
+.high-contrast.dark select:focus,
+.high-contrast.dark textarea:focus {
+  outline: 3px solid white !important;
+}
+

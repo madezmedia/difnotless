@@ -1,0 +1,51 @@
+/* Navigation menu styling improvements */
+.navigation-menu-enhanced .NavigationMenuContent {
+  border-radius: 8px;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.navigation-menu-enhanced .NavigationMenuLink {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  transition: all 0.2s ease;
+}
+
+.navigation-menu-enhanced .NavigationMenuTrigger {
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+
+.navigation-menu-enhanced .NavigationMenuTrigger[data-state="open"] {
+  background-color: hsl(var(--accent));
+}
+
+/* Improve hover and focus states */
+.navigation-menu-enhanced .NavigationMenuLink:hover,
+.navigation-menu-enhanced .NavigationMenuLink:focus-visible {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+
+/* Adjust spacing for better readability */
+.navigation-menu-enhanced .NavigationMenuList {
+  gap: 0.5rem;
+}
+
+/* Improve mobile menu styling */
+.sheet-content-enhanced .mobile-nav-link {
+  font-size: 1.05rem;
+  padding: 0.5rem 0;
+  transition: all 0.2s ease;
+}
+
+.sheet-content-enhanced .mobile-nav-link:hover {
+  transform: translateX(4px);
+}
+
+.sheet-content-enhanced .mobile-nav-heading {
+  font-size: 1.1rem;
+  margin-bottom: 0.5rem;
+  color: hsl(var(--foreground));
+}
+

@@ -1,0 +1,55 @@
+name: Shopify Integration Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 0 * * *'  # Run daily at midnight
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    
+    env:
+      NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN: ${{ secrets.NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN }}
+      SHOPIFY_STOREFRONT_ACCESS_TOKEN: ${{ secrets.SHOPIFY_STOREFRONT_ACCESS_TOKEN }}
+    
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
+      
+      - name: Run Shopify unit tests
+        run: npm run test:shopify:unit
+      
+      - name: Run Shopify integration tests
+        run: npm run test:shopify:integration
+      
+      - name: Run Shopify E2E tests
+        run: npm run test:shopify:e2e
+      
+      - name: Run Shopify performance tests
+        run: npm run test:shopify:performance
+      
+      - name: Run Shopify error handling tests
+        run: npm run test:shopify:error-handling
+      
+      - name: Upload test reports
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: shopify-test-reports
+          path: test-reports/
+

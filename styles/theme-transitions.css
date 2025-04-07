@@ -1,0 +1,84 @@
+/* Theme transition styles */
+:root {
+  --theme-transition-duration: 0.3s;
+}
+
+/* Apply transitions to specific properties for smoother theme changes */
+body,
+.theme-transition {
+  transition: background-color var(--theme-transition-duration) ease, color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease, box-shadow var(--theme-transition-duration) ease;
+}
+
+/* Transition for specific elements */
+button,
+a,
+input,
+textarea,
+select,
+.card,
+.header,
+.footer,
+.navigation-item {
+  transition:
+    background-color var(--theme-transition-duration) ease,
+    color var(--theme-transition-duration) ease,
+    border-color var(--theme-transition-duration) ease,
+    box-shadow var(--theme-transition-duration) ease,
+    transform 0.2s ease;
+}
+
+/* Theme toggle button animations */
+.theme-toggle-icon {
+  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.theme-toggle-icon.sun {
+  transform: rotate(0deg) scale(1);
+}
+
+.theme-toggle-icon.moon {
+  transform: rotate(360deg) scale(1);
+}
+
+/* Theme indicator styles */
+.theme-indicator {
+  position: relative;
+  overflow: hidden;
+}
+
+.theme-indicator::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, var(--theme-indicator-color-1), var(--theme-indicator-color-2));
+  opacity: 0.1;
+  z-index: -1;
+  transition: opacity var(--theme-transition-duration) ease;
+}
+
+.light .theme-indicator::before {
+  --theme-indicator-color-1: hsl(47.1, 89%, 60%);
+  --theme-indicator-color-2: hsl(174.5, 65.4%, 49.2%);
+}
+
+.dark .theme-indicator::before {
+  --theme-indicator-color-1: hsl(282.1, 59.8%, 47.3%);
+  --theme-indicator-color-2: hsl(174.5, 65.4%, 49.2%);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --theme-transition-duration: 0s;
+  }
+
+  .theme-toggle-icon.sun,
+  .theme-toggle-icon.moon {
+    transform: none;
+  }
+}
+

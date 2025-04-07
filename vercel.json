@@ -1,0 +1,20 @@
+{
+  "framework": "nextjs",
+  "buildCommand": "npm run build",
+  "outputDirectory": ".next",
+  "regions": ["sfo1"],
+  "env": {
+    "NEXT_PUBLIC_SHOPIFY_STORE_DOMAIN": "@next_public_shopify_store_domain",
+    "SHOPIFY_STOREFRONT_ACCESS_TOKEN": "@shopify_storefront_access_token",
+    "SHOPIFY_ADMIN_ACCESS_TOKEN": "@shopify_admin_access_token",
+    "SHOPIFY_WEBHOOK_SECRET": "@shopify_webhook_secret",
+    "NEXT_PUBLIC_SANITY_PROJECT_ID": "@next_public_sanity_project_id",
+    "NEXT_PUBLIC_SANITY_DATASET": "@next_public_sanity_dataset",
+    "SANITY_API_TOKEN": "@sanity_api_token",
+    "MAKE_WEBHOOK_SECRET": "@make_webhook_secret",
+    "NEXT_PUBLIC_SITE_URL": "@next_public_site_url"
+  },
+  "github": {
+    "silent": true
+  }
+}
